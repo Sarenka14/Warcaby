@@ -5,6 +5,7 @@ let playerBlackLoggedIn = false
 let renderWhite = false
 let renderBlack = false
 let intervalDone = false
+let waitForBlack = false
 
 document.getElementById("loginBtn").onclick = function () {
     const login = document.getElementById("loginInput").value
@@ -33,6 +34,7 @@ document.getElementById("loginBtn").onclick = function () {
                                     if (data.users == 2) {
                                         document.getElementById("status").style.display = "none";
                                         document.getElementById("bg").style.display = "none";
+                                        waitForBlack = true
 
                                     }
                                 }
