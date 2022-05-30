@@ -90,7 +90,7 @@ export default class Game {
             mouseVector.y = -(event.clientY / window.innerHeight) * 2 + 1;
             raycaster.setFromCamera(mouseVector, this.camera);
             const intersects = raycaster.intersectObjects(this.scene.children);
-            if (playerWhiteLoggedIn) { // Pierwszy gracz zalogowany
+            if (playerWhiteLoggedIn && waitForBlack) { // Pierwszy gracz zalogowany
                 if (intersects.length > 0 && intersects[0].object.type == "pawn" && intersects[0].object.material.color.getHex() == 0xDCDCDC) {
                     this.lastClicked.material.color.setHex(0xDCDCDC)
                     intersects[0].object.material.color.setHex(0xFFFF00)
