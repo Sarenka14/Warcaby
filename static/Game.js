@@ -78,18 +78,9 @@ export default class Game {
                                 .easing(TWEEN.Easing.Cubic.Out) // typ easingu (zmiana w czasie)
                                 .start()
 
-                            // console.log(cos[0].material.color.getHex())
-                            // if (cos[0].material.color.getHex() == 0xFFFFFF) {
-                            //     console.log("biały się ruszył")
-                            // } else if (cos[0].material.color.getHex() == 0x555555) {
-                            //     console.log("czarny się ruszył")
-                            // }
+                            this.tablicaPol[data.oldPosition[0]][data.oldPosition[1]].zajete = false
+                            this.tablicaPol[data.newPosition[0]][data.newPosition[1]].zajete = true
                         } catch (error) { }
-
-
-
-
-
                     }
                 )
         }
@@ -200,8 +191,6 @@ export default class Game {
         window.addEventListener('resize', this.onWindowResize, false);
 
         setInterval(this.checkMove, 500);
-
-
     }
 
 
