@@ -44,6 +44,9 @@ export default class Game {
         this.tablicaPol = []
         this.przesylanaTablica = []
 
+        this.kolejBialego = true
+        this.kolejCzarnego = false
+
         this.board()
 
         document.getElementById("root").append(this.renderer.domElement);
@@ -80,6 +83,10 @@ export default class Game {
 
                             this.tablicaPol[data.oldPosition[0]][data.oldPosition[1]].zajete = false
                             this.tablicaPol[data.newPosition[0]][data.newPosition[1]].zajete = true
+                            this.kolejBialego = true
+                            this.kolejCzarnego = true
+                            document.getElementById("kolejBg").style.display = "none";
+                            console.log("koniec tła")
                         } catch (error) { }
                     }
                 )
@@ -91,7 +98,7 @@ export default class Game {
             raycaster.setFromCamera(mouseVector, this.camera);
             const intersects = raycaster.intersectObjects(this.scene.children);
             if (playerWhiteLoggedIn && waitForBlack) { // Pierwszy gracz zalogowany
-                if (intersects.length > 0 && intersects[0].object.type == "pawn" && intersects[0].object.material.color.getHex() == 0xDCDCDC) {
+                if (intersects.length > 0 && intersects[0].object.type == "pawn" && intersects[0].object.material.color.getHex() == 0xDCDCDC && this.kolejBialego) {
                     this.lastClicked.material.color.setHex(0xDCDCDC)
                     intersects[0].object.material.color.setHex(0xFFFF00)
                     this.lastClicked = intersects[0].object
@@ -126,7 +133,10 @@ export default class Game {
                     this.pionki[intersects[0].object.position.z / 14 + 3.5][intersects[0].object.position.x / 14 + 3.5] = 1
                     let nowaPozycja = [intersects[0].object.position.z / 14 + 3.5, intersects[0].object.position.x / 14 + 3.5]
                     fetch("/ruch", { method: "post", body: JSON.stringify({ staraPozycja, nowaPozycja }) })
+                    this.kolejBialego = false
                     this.isClickedPawn = false
+                    document.getElementById("kolejBg").style.display = "block";
+                    console.log("początek tła")
                     for (let i = 0; i < 8; i++) {
                         for (let j = 0; j < 8; j++) {
                             if (this.tablicaPol[i][j].material.color.getHex() != 0xFFFFFF) {
@@ -137,7 +147,7 @@ export default class Game {
 
                 }
             } else if (playerBlackLoggedIn) { // Drugi gracz zalogowany
-                if (intersects.length > 0 && intersects[0].object.type == "pawn" && intersects[0].object.material.color.getHex() == 0xFF0000) {
+                if (intersects.length > 0 && intersects[0].object.type == "pawn" && intersects[0].object.material.color.getHex() == 0xFF0000 && this.kolejCzarnego) {
                     this.lastClicked.material.color.setHex(0xff0000)
                     intersects[0].object.material.color.setHex(0xFFFF00)
                     this.lastClicked = intersects[0].object
@@ -170,7 +180,9 @@ export default class Game {
                     this.pionki[intersects[0].object.position.z / 14 + 3.5][intersects[0].object.position.x / 14 + 3.5] = 2
                     let nowaPozycja = [intersects[0].object.position.z / 14 + 3.5, intersects[0].object.position.x / 14 + 3.5]
                     fetch("/ruch", { method: "post", body: JSON.stringify({ staraPozycja, nowaPozycja }) })
+                    this.kolejCzarnego = false
                     this.isClickedPawn = false
+                    document.getElementById("kolejBg").style.display = "block";
                     for (let i = 0; i < 8; i++) {
                         for (let j = 0; j < 8; j++) {
                             if (this.tablicaPol[i][j].material.color.getHex() != 0xFFFFFF) {
@@ -265,6 +277,8 @@ export default class Game {
                 if (renderWhite == false) {
                     this.makeWhitePons()
                     renderWhite = true
+                    document.getElementById("kolejBg").style.display = "none";
+
                 }
             }
             if (playerBlackLoggedIn) {
@@ -272,6 +286,7 @@ export default class Game {
                 if (renderBlack == false) {
                     this.makeBlackPons()
                     renderBlack = true
+                    document.getElementById("kolejBg").style.display = "block";
                 }
             }
         }
