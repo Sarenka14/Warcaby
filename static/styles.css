@@ -46,6 +46,14 @@ body {
     z-index: 10000000;
 }
 
+.kolejBg {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 100000000;
+}
+
 .statusBar {
     position: absolute;
     z-index: 1000000000;
