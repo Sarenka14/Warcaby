@@ -277,7 +277,6 @@ export default class Game {
                 if (renderWhite == false) {
                     this.makeWhitePons()
                     renderWhite = true
-                    document.getElementById("kolejBg").style.display = "none";
 
                 }
             }
@@ -286,7 +285,6 @@ export default class Game {
                 if (renderBlack == false) {
                     this.makeBlackPons()
                     renderBlack = true
-                    document.getElementById("kolejBg").style.display = "block";
                 }
             }
         }
