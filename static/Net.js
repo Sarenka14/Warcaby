@@ -46,6 +46,10 @@ document.getElementById("loginBtn").onclick = function () {
                         document.getElementById("statusBar").innerHTML += `<h2>USER_ADDED<h2><p>Witaj <span style="color:white;">${login}</span>, grasz czerwonymi.</p>`
                         document.getElementById("userLogin").style.display = "none";
                         document.getElementById("bg").style.display = "none";
+                        document.getElementById("kolejBg").style.display = "block";
+
+                        
+
                         playerBlackLoggedIn = true
                     }
                     if (data.color == "no color") {
